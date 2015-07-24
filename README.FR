@@ -15,13 +15,13 @@ cd ../RPi.GPIO-0.5.11
 sudo python setup.py install
 cd ..
 Installer arduino_michelgard_rx_tx.ino sur votre ARDUINO. C’est un exemple qui envoie un message toutes les trois secondes avec un compteur et l’arduino retourne le message. 
-Connexion NFRL01 sur l’arduino : 
+Connexion nRF24L01+ sur l’arduino : 
 1 GND			2 VCC 3.3  
 3 D9			4 D10
 5 D13			6 D11
 7 D12			8 D2
 
-Installer NRFL01 sur le Raspberry PI
+Installer nRF24L01+ sur le Raspberry PI
 NRFL01		Rasppi
 1		6 GND			
 2		1 VCC 3.3  
