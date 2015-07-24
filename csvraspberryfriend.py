@@ -32,7 +32,9 @@ def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
 def extract(raw_string, start_marker, end_marker):
     start = raw_string.index(start_marker) + len(start_marker)
+    print start
     end = raw_string.index(end_marker, start)
+    print end
     return raw_string[start:end]
 while True:
     pipe = [0]
@@ -41,6 +43,7 @@ while True:
     recv_buffer = []
     radio.read(recv_buffer)
     out = ''.join(chr(i) for i in recv_buffer)
+    print(out)
     temper=extract(out,'T','T')
     humid=extract(out,'H','H')
     press=extract(out,'P','P')
@@ -57,3 +60,4 @@ while True:
         print >> filep, ";".join([date,temper, humid, press])
         filep.close()
     
+

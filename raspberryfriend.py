@@ -12,7 +12,7 @@ pipes = [[0xf0, 0xf0, 0xf0, 0xf0, 0xe1], [0xf0, 0xf0, 0xf0, 0xf0, 0xd2]]
 radio = NRF24()
 radio.begin(0, 0,25,18) #set gpio 25 as CE pin
 radio.setRetries(15,15)
-radio.setPayloadSize(32)
+radio.setPayloadSize(42)
 radio.setChannel(0x4c)
 radio.setDataRate(NRF24.BR_250KBPS)
 radio.setPALevel(NRF24.PA_MAX)
@@ -35,3 +35,7 @@ while True:
     out = ''.join(chr(i) for i in recv_buffer)
     print out
     
+    radio.stopListening();
+    retour = "r";
+    ok = radio.write(out);
+    radio.startListening();
