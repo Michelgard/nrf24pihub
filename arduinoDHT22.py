@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # raspberry pi nrf24l01 hub
-# more details at http://blog.riyas.org
-# Credits to python port of nrf24l01, Joao Paulo Barrac & maniacbugs original c library
 
 from nrf24 import NRF24
 import time
@@ -20,10 +20,10 @@ radio.setAutoAck(1)
 radio.openWritingPipe(pipes[0])
 radio.openReadingPipe(1, pipes[1])
 
-radio.startListening()
-radio.stopListening()
+#radio.startListening()
+#radio.stopListening()
 
-radio.printDetails()
+#radio.printDetails()
 radio.startListening()
 
 def extract(raw_string, start_marker, end_marker):
@@ -31,6 +31,7 @@ def extract(raw_string, start_marker, end_marker):
     end = raw_string.index(end_marker, start)
     return raw_string[start:end]
 
+print ("Attente réception du capteur")
 while True:
     pipe = [0]
     while not radio.available(pipe, True):
@@ -44,10 +45,13 @@ while True:
     humid=extract(out,'H','H')
     tens=extract(out,'V','V')
 
-    print capt
-    print temper
-    print humid
-    print tens
+    capt = str(int(float(capt)))
+    
+    print ("Numéro du capteur : " + capt)
+    print ("La temppérature : " + temper + "°C")
+    print ("Niveau d'humidité : " + humid + "%")
+    print ("Tension de l'accu : " + tens + " volts")
+    print
     
 """    radio.stopListening();
     ok = radio.write(out);
