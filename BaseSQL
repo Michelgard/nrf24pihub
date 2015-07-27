@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `Capteurs_Temp_Portable` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Date_Heure` datetime NOT NULL,
+  `Temperature` float NOT NULL,
+  `Humidite` float NOT NULL,
+  `Tension_Pile` float NOT NULL,
+  `N_Capteur` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
