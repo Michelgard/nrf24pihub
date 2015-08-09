@@ -370,6 +370,7 @@ class NRF24:
         self.ce_pin = ce_pin
         self.irq_pin = irq_pin
 
+	GPIO.setwarnings(False) 
         GPIO.setup(self.ce_pin, GPIO.OUT)
         GPIO.setup(self.irq_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 

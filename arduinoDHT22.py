@@ -6,6 +6,15 @@ import time
 from time import gmtime, strftime
 import MySQLdb
 import xml.dom.minidom
+import sys
+
+verbose = 0
+if len(sys.argv) > 1:
+    if sys.argv[1] == "-v":
+	verbose = 1
+    else:
+	print "Argument non reconnu !  -v pour verbose"
+	sys.exit(0) 
 
 """import données connexion SGL d'un fichier config en XML"""
 tree = xml.dom.minidom.parse("/home/pi/nrf24pihub/configSQL.xml")
@@ -35,9 +44,11 @@ def extract(raw_string, start_marker, end_marker):
     end = raw_string.index(end_marker, start)
     return raw_string[start:end]
 
-print
-print ("Attente réception du capteur")
-print
+if verbose:
+    print
+    print ("Attente réception du capteur")
+    print
+
 """Boucle infinie de réception des données"""
 while True:
     pipe = [0]
@@ -55,7 +66,8 @@ while True:
     dateheure = "%02d/%02d/%04d" % (day, month, year) + "  " + "%02d:%02d:%02d" % (hour, minute, second)
     dateheureSQL = "%04d-%02d-%02d" % (year, month, day) + " " + "%02d:%02d:%02d" % (hour, minute, second)
 
-    print dateheure
+    if verbose:
+	print (dateheure)
     
     """"La variable out est décortiquée avec les données de numéro de capteur, température, humidité, tension pile """
     capt=extract(out,'C','C')
@@ -65,12 +77,13 @@ while True:
 
     capt = str(int(float(capt)))#on transforme le numéro de capteur d'abord en float puis en int pour finir en str
     """affichage des données recues pour es teste"""
-    print ("Numéro du capteur : " + capt)
-    print ("La temppérature   : " + temper + "°C")
-    print ("Niveau d'humidité : " + humid + "%")
-    print ("Tension de l'accu : " + tens + " volts")
-    print
-
+    if verbose:
+	print ("Numéro du capteur : " + capt)
+    	print ("La temppérature   : " + temper + "°C")
+    	print ("Niveau d'humidité : " + humid + "%")
+    	print ("Tension de l'accu : " + tens + " volts")
+    	print
+ 
     """Connexion et insertion de la données dans la base"""
     for valeur in valeurListe:
     	#connexion  à la base de données
@@ -79,7 +92,8 @@ while True:
     sql = "INSERT INTO `Capteurs_Temp_Portable`(`Date_Heure`, `Temperature`, `Humidite`, `Tension_Pile`, `N_Capteur`)\
     	VALUES ('" + dateheureSQL + "', " + temper + ", " + humid + ", " + tens + ", " + capt + ")"
 
-    print sql
+    if verbose:
+	print sql
     dbSQL.execute(sql)
     db.commit()
 
